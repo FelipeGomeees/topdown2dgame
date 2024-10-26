@@ -1,0 +1,7 @@
+#hud {
+    position: absolute;
+    height: 900px;
+    width: 900px;
+    top: 0;
+    left: 0;
+}
