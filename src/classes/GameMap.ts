@@ -1,4 +1,6 @@
+import { colorList, tileList } from "../utils/lists";
 export class GameMap {
+    colorMap: number[][]
     tileMap: number[][];
     collisionMap: number[][];
 
@@ -15,25 +17,25 @@ export class GameMap {
 
     public draw() {
         const canvas = document.getElementById("map") as HTMLCanvasElement;
-        interface idToTile {
-            [key: number]: string;
-        }
-        const converter: idToTile = {
-            0: 'green',
-            1: 'blue',
-        }
         const ctx = canvas.getContext("2d");
+        console.log(this.tileMap.length);
         if (ctx) {
             for (let i = 0; i < this.tileMap.length; i++) {
                 for (let j = 0; j < this.tileMap[i].length; j++) {
-                    ctx.fillStyle = converter[this.tileMap[i][j]];
+                    ctx.fillStyle = colorList[this.colorMap[i][j]];
                     ctx.fillRect(i * 50, j * 50, 50, 50);
+                    const img = new Image();
+                    img.src = tileList[this.tileMap[i][j]];
+                    img.onload = () => {
+                        ctx.drawImage(img, i * 50, j * 50, 50, 50);
+                    }
                 }
             }
         }
     }
 
-    constructor(tileMap?: number[][], collisionMap?: number[][]) {
+    constructor(colorMap?: number[][], tileMap?: number[][], collisionMap?: number[][]) {
+        this.colorMap = colorMap || GameMap.defaultMap();
         this.tileMap = tileMap || GameMap.defaultMap();
         this.collisionMap = collisionMap || GameMap.defaultMap();     
     }
