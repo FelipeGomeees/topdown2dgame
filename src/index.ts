@@ -1,6 +1,6 @@
 import { GameMap } from "./classes/GameMap";
 
-async function gameSetup() {
+window.onload = () => {
     const map = new GameMap();
     map.draw();
-}
+}   
